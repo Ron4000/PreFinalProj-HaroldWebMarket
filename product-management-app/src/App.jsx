@@ -135,7 +135,7 @@ function AppContent() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Navbar cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} onAddProduct={() => setIsFormOpen(true)} />
       <Routes>
         <Route path="/" element={
