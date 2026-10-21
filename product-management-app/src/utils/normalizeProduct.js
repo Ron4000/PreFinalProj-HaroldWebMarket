@@ -1,0 +1,105 @@
+export function normalizeProduct(product) {
+  const dimensions = product.dimensions
+    ? `${product.dimensions.width} × ${product.dimensions.height} × ${product.dimensions.depth} cm`
+    : ''
+  const specification = [
+    product.brand && `Brand: ${product.brand}`,
+    product.sku && `SKU: ${product.sku}`,
+    product.weight && `Weight: ${product.weight} g`,
+    dimensions && `Dimensions: ${dimensions}`,
+    product.warrantyInformation && `Warranty: ${product.warrantyInformation}`,
+    product.shippingInformation && `Shipping: ${product.shippingInformation}`,
+    product.returnPolicy && `Returns: ${product.returnPolicy}`,
+  ].filter(Boolean).join('\n')
+
+  return {
+    id: product.id,
+    image: product.thumbnail || product.images?.[0] || '',
+    name: product.title || 'Untitled product',
+    category: product.category || 'Uncategorized',
+    description: product.description || '',
+    specification: product.specification || specification || 'No specifications provided.',
+    rating: Number(product.rating) || 0,
+    price: Number(product.price) || 0,
+    quantity: Number(product.stock ?? product.quantity) || 0,
+    images: product.images?.length ? product.images : [product.thumbnail].filter(Boolean),
+    brand: product.brand || '',
+    reviews: product.reviews || [],
+    discountPercentage: Number(product.discountPercentage) || 0,
+  }
+}
+
+export const defaultProducts = [
+  {
+    id: 101,
+    title: 'Minimalist Ceramic Vase',
+    category: 'home-decoration',
+    description: 'A sculptural ceramic vase with a soft matte finish, made to bring a considered touch to everyday spaces.',
+    price: 42.5,
+    rating: 4.8,
+    stock: 12,
+    thumbnail: 'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=900&q=85',
+    images: ['https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=900&q=85'],
+    brand: 'Form & Field',
+    specification: 'Material: Stoneware\nFinish: Matte\nDimensions: 18 × 18 × 24 cm',
+    reviews: [],
+  },
+  {
+    id: 102,
+    title: 'Everyday Leather Tote',
+    category: 'womens-bags',
+    description: 'A roomy, beautifully simple carryall with durable leather, thoughtful pockets, and comfortable shoulder straps.',
+    price: 89,
+    rating: 4.6,
+    stock: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=85',
+    images: ['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=85'],
+    brand: 'Atelier North',
+    specification: 'Material: Full-grain leather\nCare: Wipe clean\nCapacity: 16 L',
+    reviews: [],
+  },
+  {
+    id: 103,
+    title: 'Studio Wireless Headphones',
+    category: 'mobile-accessories',
+    description: 'Comfortable over-ear headphones with rich, balanced sound and a clean design for work or winding down.',
+    price: 129.95,
+    rating: 4.9,
+    stock: 0,
+    thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85',
+    images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=85'],
+    brand: 'Soundroom',
+    specification: 'Connectivity: Bluetooth\nBattery life: 30 hours\nCharging: USB-C',
+    reviews: [],
+  },
+  {
+    id: 104,
+    title: 'Soft Knit Throw',
+    category: 'home-decoration',
+    description: 'A soft, weighty knit throw that layers beautifully across a sofa, reading chair, or the end of a bed.',
+    price: 68,
+    rating: 4.7,
+    stock: 8,
+    thumbnail: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85',
+    images: ['https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85'],
+    brand: 'Sunday House',
+    specification: 'Material: Cotton blend\nCare: Machine wash cold\nSize: 130 × 170 cm',
+    reviews: [],
+  },
+  {
+    id: 105,
+    title: 'Daily Ritual Skincare Set',
+    category: 'skincare',
+    description: 'A gentle three-step routine with everyday essentials designed to leave skin feeling calm and hydrated.',
+    price: 54,
+    rating: 4.5,
+    stock: 16,
+    thumbnail: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=85',
+    images: ['https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=85'],
+    brand: 'Kindred Botanics',
+    specification: 'Set includes: Cleanser, serum, moisturizer\nSkin type: All skin types\nCruelty-free',
+    reviews: [],
+  },
+]
+
+export const normalizedDefaults = defaultProducts.map(normalizeProduct)
